@@ -19,6 +19,7 @@
 		0BFB9DFB23CFFC8900A3184B /* Auth+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DFA23CFFC8900A3184B /* Auth+Combine.swift */; };
 		0BFB9DFD23CFFCC000A3184B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DFC23CFFCC000A3184B /* Auth.swift */; };
 		0BFB9DFF23CFFD1B00A3184B /* FireStorePaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DFE23CFFD1B00A3184B /* FireStorePaths.swift */; };
+		0BFB9E0123D007FE00A3184B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9E0023D007FE00A3184B /* Room.swift */; };
 		CD82F63A4A40E2672A7C7519 /* Pods_setori.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40903344788376A875746F9 /* Pods_setori.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		0BFB9DFA23CFFC8900A3184B /* Auth+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Combine.swift"; sourceTree = "<group>"; };
 		0BFB9DFC23CFFCC000A3184B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		0BFB9DFE23CFFD1B00A3184B /* FireStorePaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorePaths.swift; sourceTree = "<group>"; };
+		0BFB9E0023D007FE00A3184B /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DE1DCD536F7FD49E7255A0DD /* Pods-setori.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-setori.release.xcconfig"; path = "Target Support Files/Pods-setori/Pods-setori.release.xcconfig"; sourceTree = "<group>"; };
 		EEE84479DD4544473F1DA42D /* Pods-setori.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-setori.debug.xcconfig"; path = "Target Support Files/Pods-setori/Pods-setori.debug.xcconfig"; sourceTree = "<group>"; };
 		F40903344788376A875746F9 /* Pods_setori.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_setori.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 				0BFB9DF523CF644C00A3184B /* App.swift */,
 				0BFB9DF723CF688D00A3184B /* Store.swift */,
 				0BFB9DFC23CFFCC000A3184B /* Auth.swift */,
+				0BFB9E0023D007FE00A3184B /* Room.swift */,
 			);
 			path = Redux;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				0BFB9DFF23CFFD1B00A3184B /* FireStorePaths.swift in Sources */,
 				0BFB9DF623CF644C00A3184B /* App.swift in Sources */,
 				0BFB9DFB23CFFC8900A3184B /* Auth+Combine.swift in Sources */,
+				0BFB9E0123D007FE00A3184B /* Room.swift in Sources */,
 				0BFB9DFD23CFFCC000A3184B /* Auth.swift in Sources */,
 				0BFB9DE023CF5B3300A3184B /* SceneDelegate.swift in Sources */,
 				0BFB9DE223CF5B3300A3184B /* ContentView.swift in Sources */,

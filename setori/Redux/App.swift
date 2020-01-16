@@ -94,6 +94,7 @@ enum RootReducer {
 struct AppState: StateType {
     var authState: AuthState = .init()
     var rootState: RootState = .init()
+    var roomState: RoomState = .init()
 }
 
 enum AppReducer {
@@ -104,6 +105,7 @@ enum AppReducer {
             // enumrate app all reducers
             state.rootState = RootReducer.reduce(action, state.rootState)
             state.authState = AuthReducer.reduce(action, state.authState)
+            state.roomState = RoomReducer.reduce(action, state.roomState)
             
             return state
         }
