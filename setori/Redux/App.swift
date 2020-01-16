@@ -17,9 +17,9 @@ struct Info: SnapshotData {
     var version: String
 }
 
-// "/master/info"
-extension DocumentPaths {
-    static let info = CollectionPath<Info>("master").document("info")
+struct UserAuth: SnapshotData, HasTimestamps {
+    let uid: String
+    let name: String
 }
 
 struct RootState: StateType {
@@ -92,6 +92,7 @@ enum RootReducer {
 
 // app all states
 struct AppState: StateType {
+    var authState: AuthState = .init()
     var rootState: RootState = .init()
 }
 
@@ -102,6 +103,7 @@ enum AppReducer {
             
             // enumrate app all reducers
             state.rootState = RootReducer.reduce(action, state.rootState)
+            state.authState = AuthReducer.reduce(action, state.authState)
             
             return state
         }

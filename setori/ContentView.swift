@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ChildView: View {
+struct RootView: View {
     @EnvironmentObject private var store: AppStore
     
     private var state: RootState {
@@ -18,7 +18,16 @@ struct ChildView: View {
     }
     
     var body: some View {
-        Text("Hello Setori \(state.info?.version ?? "---")")
+        VStack {
+            Text("Hello Setori \(state.info?.version ?? "---")")
+            Text("uid: \(self.store.state.authState.user?.data.uid ?? "---")")
+            Text("name: \(self.store.state.authState.user?.data.name ?? "---")")
+        }.onAppear {
+            self.store.dispatch(RootAction.subscribe())
+        }
+        .onDisappear {
+            self.store.dispatch(RootAction.unsubscribe())
+        }
     }
 }
 
@@ -30,13 +39,10 @@ struct ContentView: View {
     var body: some View {
         // wrap view
         AnyView({ () -> AnyView in
-            return AnyView(ChildView())
+            return AnyView(RootView())
         }())
         .onAppear {
-            self.store.dispatch(RootAction.subscribe())
-        }
-        .onDisappear {
-            self.store.dispatch(RootAction.unsubscribe())
+            self.store.dispatch(AuthAction.subscribe())
         }
         
     }
