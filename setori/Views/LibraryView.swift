@@ -57,14 +57,16 @@ struct LibraryView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(favorites) { favorite in
-                    TrackView(track: favorite)
-                    .onTapGesture {
-                        print(favorite)
-                        // self.target = bookmark
-                        // self.modalPresented = true
-                    }
-                }.onDelete(perform: deleteRow)
+                Section(header: Text("Favorites")) {
+                    ForEach(favorites) { favorite in
+                        TrackView(track: favorite)
+                        .onTapGesture {
+                            print(favorite)
+                            // self.target = bookmark
+                            // self.modalPresented = true
+                        }
+                    }.onDelete(perform: deleteRow)
+                }
             }
         }
     }

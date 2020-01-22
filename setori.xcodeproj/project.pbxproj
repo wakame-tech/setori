@@ -10,6 +10,8 @@
 		0B72830123D82780000D4341 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72830023D82780000D4341 /* RootView.swift */; };
 		0B72830323D827C5000D4341 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72830223D827C5000D4341 /* RoomView.swift */; };
 		0B72830523D82943000D4341 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72830423D82943000D4341 /* LibraryView.swift */; };
+		0B72830723D833B9000D4341 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72830623D833B8000D4341 /* Player.swift */; };
+		0B72830923D838F2000D4341 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72830823D838F2000D4341 /* PlayerView.swift */; };
 		0BFB9DDE23CF5B3300A3184B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DDD23CF5B3300A3184B /* AppDelegate.swift */; };
 		0BFB9DE023CF5B3300A3184B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DDF23CF5B3300A3184B /* SceneDelegate.swift */; };
 		0BFB9DE223CF5B3300A3184B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFB9DE123CF5B3300A3184B /* ContentView.swift */; };
@@ -30,6 +32,8 @@
 		0B72830023D82780000D4341 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		0B72830223D827C5000D4341 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		0B72830423D82943000D4341 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		0B72830623D833B8000D4341 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		0B72830823D838F2000D4341 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		0BFB9DDA23CF5B3300A3184B /* setori.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = setori.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BFB9DDD23CF5B3300A3184B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BFB9DDF23CF5B3300A3184B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 				0B72830023D82780000D4341 /* RootView.swift */,
 				0B72830223D827C5000D4341 /* RoomView.swift */,
 				0B72830423D82943000D4341 /* LibraryView.swift */,
+				0B72830823D838F2000D4341 /* PlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 				0BFB9DF723CF688D00A3184B /* Store.swift */,
 				0BFB9DFC23CFFCC000A3184B /* Auth.swift */,
 				0BFB9E0023D007FE00A3184B /* Room.swift */,
+				0B72830623D833B8000D4341 /* Player.swift */,
 			);
 			path = Redux;
 			sourceTree = "<group>";
@@ -274,9 +280,11 @@
 				0BFB9DFF23CFFD1B00A3184B /* FireStorePaths.swift in Sources */,
 				0BFB9DF623CF644C00A3184B /* App.swift in Sources */,
 				0B72830123D82780000D4341 /* RootView.swift in Sources */,
+				0B72830723D833B9000D4341 /* Player.swift in Sources */,
 				0B72830523D82943000D4341 /* LibraryView.swift in Sources */,
 				0BFB9DFB23CFFC8900A3184B /* Auth+Combine.swift in Sources */,
 				0BFB9E0123D007FE00A3184B /* Room.swift in Sources */,
+				0B72830923D838F2000D4341 /* PlayerView.swift in Sources */,
 				0BFB9DFD23CFFCC000A3184B /* Auth.swift in Sources */,
 				0B72830323D827C5000D4341 /* RoomView.swift in Sources */,
 				0BFB9DE023CF5B3300A3184B /* SceneDelegate.swift in Sources */,
