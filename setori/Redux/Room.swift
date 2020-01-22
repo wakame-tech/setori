@@ -13,7 +13,8 @@ import Foundation
 import ReSwift
 import ReSwiftThunk
 
-struct Track: SnapshotData, HasTimestamps, Equatable {
+struct Track: SnapshotData, HasTimestamps, Equatable, Identifiable {
+    var id: UUID = UUID()
     var title: String
     
     static var fieldNames: [PartialKeyPath<Track> : String] {
@@ -36,7 +37,6 @@ struct RoomState: StateType {
 enum RoomAction: Action {
     case updateListener(listener: ListenerRegistration?)
     case updateRoom(room: Snapshot<Room>)
-    // case updateTracks(tracks: [Snapshot<Track>])
     
     static func subscribe(roomID: String) -> Thunk<AppState> {
         Thunk<AppState> { dispatch, getState in
