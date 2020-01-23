@@ -26,7 +26,7 @@ struct Track: SnapshotData, HasTimestamps, Equatable, Identifiable {
 
 struct Room: SnapshotData {
     let roomID: String
-    let tracks: [Track]
+    var tracks: [Track]
 }
 
 struct RoomState: StateType {
@@ -76,6 +76,19 @@ enum RoomAction: Action {
                     print(error)
                 }
             }
+        }
+    }
+    
+    static func reserveTrack(track: Track) -> Thunk<AppState> {
+        Thunk<AppState> { dispatch, getState in
+            guard let room = getState()?.roomState.room else {
+                return
+            }
+            
+            room.tracks.append(track)
+            room.update()
+            
+            dispatch(RoomAction.updateRoom(room: room))
         }
     }
     

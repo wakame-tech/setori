@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Foundation
-
+import PartialSheet
 
 struct TrackView: View {
     var track: Track
@@ -35,7 +35,6 @@ struct TrackView: View {
         .cornerRadius(10)
         // border less
         .onAppear { UITableView.appearance().separatorStyle = .none }
-        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
     }
     
     private func trackColor() -> Color {
@@ -46,6 +45,8 @@ struct TrackView: View {
 // root view
 struct LibraryView: View {
     @EnvironmentObject private var store: AppStore
+    @State private var target: Track?
+    @State private var actionShowing: Bool = false
     
     @State var favorites: [Track] = [
         Track(title: "AAA"),
@@ -61,13 +62,23 @@ struct LibraryView: View {
                     ForEach(favorites) { favorite in
                         TrackView(track: favorite)
                         .onTapGesture {
-                            print(favorite)
-                            // self.target = bookmark
-                            // self.modalPresented = true
+                             self.target = favorite
+                             self.actionShowing = true
                         }
                     }.onDelete(perform: deleteRow)
                 }
             }
+        }
+        .actionSheet(isPresented: $actionShowing) {
+            ActionSheet(title: Text("\(self.target?.title ?? "")"), buttons: [
+                .default(Text("予約する")) {
+                    guard let track = self.target else {
+                        return
+                    }
+                    
+                    self.store.dispatch(RoomAction.reserveTrack(track: track))
+                }
+            ])
         }
     }
     
