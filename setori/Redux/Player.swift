@@ -19,6 +19,7 @@ struct PlayerState: StateType {
 enum PlayerAction: Action {
     case updatePlayerController(playerController: YTPlayerController)
     case togglePlayAndStop
+    case stop
     case updateVideoId(videoId: String)
     
     static func updateController(playerController: YTPlayerController) {
@@ -35,10 +36,65 @@ enum PlayerAction: Action {
         }
     }
     
+    static func stop() -> Thunk<AppState> {
+        Thunk<AppState> { dispatch, getState in
+            print("PlayerAction.stop()")
+            dispatch(PlayerAction.stop)
+        }
+    }
+    
+    @available(*, unavailable, deprecated: 1.0)
     static func setVideoId(videoId: String) -> Thunk<AppState> {
         Thunk<AppState> { dispatch, getState in
             print("PlayerAction.setVideoId()")
             dispatch(PlayerAction.updateVideoId(videoId: videoId))
+        }
+    }
+    
+    static func setCurrentVideoId() -> Thunk<AppState> {
+        Thunk<AppState> { dispatch, getState in
+            print("PlayerAction.setCurrentVideoId()")
+            guard let tracks = getState()?.roomState.room?.tracks else {
+                return
+            }
+            
+            // last track
+            if tracks.isEmpty {
+                print("empty")
+                return
+            }
+            // set track
+            dispatch(PlayerAction.updateVideoId(videoId: tracks[0].videoId))
+        }
+    }
+    
+    static func setNextVideoId() -> Thunk<AppState> {
+        Thunk<AppState> { dispatch, getState in
+            print("PlayerAction.setNextVideoId()")
+            
+            guard let tracks = getState()?.roomState.room?.tracks else {
+                return
+            }
+            
+            // last track
+            if tracks.isEmpty {
+                print("empty")
+                return
+            }
+            // last track
+            else if tracks.count == 1 {
+                print("last video")
+                dispatch(RoomAction.popTrack())
+                dispatch(PlayerAction.stop())
+                return
+            }
+            // next track
+            else {
+                let nextVideoId = tracks[0].videoId
+                print("next videoId: \(nextVideoId)")
+                dispatch(RoomAction.popTrack())
+                dispatch(PlayerAction.updateVideoId(videoId: nextVideoId))
+            }
         }
     }
 }
@@ -55,6 +111,9 @@ enum PlayerReducer {
             case .togglePlayAndStop:
                 print("reducer togglePlayAndStop")
                 state.controller?.toggle()
+            case .stop:
+                print("reducer stop")
+                state.controller?.stop()
             case let .updateVideoId(videoId):
                 state.controller?.setVideoId(videoId)
             case let .updatePlayerController(playerController):

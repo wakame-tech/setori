@@ -12,7 +12,7 @@ import YoutubeKit
 
 class YTPlayerController: ObservableObject, Identifiable, YTSwiftyPlayerDelegate {
     @Published var player: YTSwiftyPlayer!
-    private var isPlaying: Bool = false
+    @Published var isPlaying: Bool = false
     private var videoId: String?
     
     init() {
@@ -26,6 +26,12 @@ class YTPlayerController: ObservableObject, Identifiable, YTSwiftyPlayerDelegate
             ]
         )
         player.delegate = self
+    }
+    
+    func reload() {
+        if self.videoId != nil {
+            self.player.loadPlayer()
+        }
     }
     
     func setVideoId(_ videoId: String) {
@@ -43,6 +49,10 @@ class YTPlayerController: ObservableObject, Identifiable, YTSwiftyPlayerDelegate
     func toggle() {
         print("YTPlayerController.toggle() isPlaying: \(self.isPlaying)")
         self.isPlaying ? self.player?.pauseVideo() : self.player?.playVideo()
+    }
+    
+    func stop() {
+        self.player?.stopVideo()
     }
     
     func playerReady(_ player: YTSwiftyPlayer) {
@@ -83,6 +93,32 @@ struct YTPlayer: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
+// controller
+struct PlayerControllerView: View {
+    @EnvironmentObject private var store: AppStore
+    
+    var body: some View {
+        HStack {
+            Button(action: {
+                self.store.dispatch(PlayerAction.toggle())
+            }) {
+                Image(systemName: self.store.state.playerState.controller?.isPlaying ?? false  ? "pause.fill" : "play.fill")
+                .font(.title)
+            }
+            .padding(.leading, CGFloat(20.0))
+            
+            Button(action: {
+                self.store.dispatch(PlayerAction.setNextVideoId())
+            }) {
+                Image(systemName: "forward.end.fill")
+                .font(.title)
+            }
+            .padding(.leading, CGFloat(20.0))
+        }
+        .padding(.bottom, CGFloat(20.0))
+    }
+}
+
 // player view
 struct PlayerView: View {
     @EnvironmentObject private var store: AppStore
@@ -91,8 +127,11 @@ struct PlayerView: View {
     var body: some View {
         VStack {
             YTPlayer(player: self.ytPlayerController.player!)
+            
+            PlayerControllerView()
         }
         .onAppear {
+            // set controller
             self.store.dispatch(PlayerAction.updatePlayerController(playerController: self.ytPlayerController))
         }
     }

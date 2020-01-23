@@ -49,10 +49,10 @@ struct LibraryView: View {
     @State private var actionShowing: Bool = false
     
     @State var favorites: [Track] = [
-        Track(title: "AAA"),
-        Track(title: "BBB"),
-        Track(title: "CCC"),
-        Track(title: "DDD"),
+        Track(title: "椎名林檎 - 公然の秘密", videoId: "ETtDJz9t09U"),
+        Track(title: "椎名林檎と宇多田ヒカル - 浪漫と算盤 / Sheena Ringo & Hikaru Utada- The Sun&moon", videoId: "VXJdG0elwSY"),
+        Track(title: "King Gnu - 白日", videoId: "ony539T074w"),
+        Track(title: "Official髭男dism - Pretender［Official Video］", videoId: "TQ8WlA2GXbk"),
     ]
     
     var body: some View {

@@ -24,8 +24,11 @@ struct RoomView: View {
         VStack {
             Section {
                 Text("roomID: \(state.room?.data.roomID ?? "---") ")
-                Text("tracks: \((state.room?.data.tracks ?? []).debugDescription)")
                 
+                ForEach(state.room?.tracks ?? []) { track in
+                    Text("\(track.title)")
+                }
+
                 Button(action: {
                     self.store.dispatch(PlayerAction.toggle())
                 }) {
@@ -33,14 +36,16 @@ struct RoomView: View {
                 }
                 
                 Button(action: {
-                    self.store.dispatch(PlayerAction.setVideoId(videoId: "ETtDJz9t09U"))
+                    self.store.dispatch(PlayerAction.setNextVideoId())
                 }) {
-                    Text("Set VideoId")
+                    Text("Next")
                 }
             }
         }
         .onAppear {
             self.store.dispatch(RoomAction.subscribe(roomID: "12345"))
+            
+            self.store.dispatch(PlayerAction.setCurrentVideoId())
         }
     }
 }

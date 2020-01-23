@@ -16,10 +16,12 @@ import ReSwiftThunk
 struct Track: SnapshotData, HasTimestamps, Equatable, Identifiable {
     var id: UUID = UUID()
     var title: String
+    var videoId: String
     
     static var fieldNames: [PartialKeyPath<Track> : String] {
         [
             \Self.self.title: "title",
+            \Self.self.videoId: "videoId",
         ]
     }
 }
@@ -86,6 +88,19 @@ enum RoomAction: Action {
             }
             
             room.tracks.append(track)
+            room.update()
+            
+            dispatch(RoomAction.updateRoom(room: room))
+        }
+    }
+    
+    static func popTrack() -> Thunk<AppState> {
+        Thunk<AppState> { dispatch, getState in
+            guard let room = getState()?.roomState.room else {
+                return
+            }
+            
+            room.tracks.removeFirst()
             room.update()
             
             dispatch(RoomAction.updateRoom(room: room))
