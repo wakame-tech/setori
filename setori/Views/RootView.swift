@@ -47,17 +47,63 @@ struct SettingsView: View {
 }
 
 // Handle dragging
+// TODO: calclate offset
+// TODO: region restrict
 struct DraggableView: ViewModifier {
-  @State var offset = CGPoint(x: 0, y: 0)
+    @State private var validPos: CGPoint = .zero
+    @State private var pos: CGPoint = .zero
+    @State private var offset: CGPoint = .zero
+    @State private var overLimit: Bool = false
 
-  func body(content: Content) -> some View {
-    content
-      .gesture(DragGesture(minimumDistance: 0)
-        .onChanged { value in
-          self.offset.x += value.location.x - value.startLocation.x
-          self.offset.y += value.location.y - value.startLocation.y
-      })
-      .offset(x: offset.x, y: offset.y)
+    func isSafe(region: CGRect, location: CGPoint) -> Bool {
+        return region.contains(location)
+    }
+    
+    func body(content: Content) -> some View {
+        GeometryReader { geometry in
+            content
+                .gesture(
+                    DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                        .onChanged { value in
+                            let rect = geometry.frame(in: .global)
+                            self.offset = CGPoint(
+                                x: value.location.x - rect.origin.x,
+                                y: value.location.y - rect.origin.y
+                            )
+                            self.pos = CGPoint(
+                                x: value.location.x + self.offset.x,
+                                y: value.location.y + self.offset.y
+                            )
+//                            self.offset.x += value.translation.width
+//                            self.offset.y += value.translation.height
+                            if !self.overLimit && !self.isSafe(region: rect, location: value.location) {
+                                print("over limit")
+                                self.overLimit = true
+                                self.validPos =  value.location
+                            } else {
+                            }
+                        }
+                        .onEnded { value in
+                            let rect = geometry.frame(in: .global)
+                            print(value.location)
+                            let nowSafe = self.isSafe(region: rect, location: value.location)
+                            
+                            print("overlimit: \(self.overLimit)")
+                            print("nowSafe: \(nowSafe)")
+                            
+                            if self.overLimit && !nowSafe {
+                                print("limit")
+                                self.pos = CGPoint(
+                                    x: self.validPos.x + self.offset.x,
+                                    y: self.validPos.y + self.offset.y
+                                )
+                            }
+                            self.overLimit = false
+                        }
+                )
+                // .offset(x: self.offset.x, y: self.offset.y)
+                .position(self.offset)
+        }
   }
 }
 
@@ -103,7 +149,7 @@ struct RootView: View {
             VStack {
                 Spacer()
                 PlayerView()
-                    .frame(width: 320, height: 160)
+                    .frame(width: 260, height: 160)
                     .draggable()
             }
         }

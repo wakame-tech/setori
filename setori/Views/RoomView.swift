@@ -44,8 +44,6 @@ struct RoomView: View {
         }
         .onAppear {
             self.store.dispatch(RoomAction.subscribe(roomID: "12345"))
-            
-            self.store.dispatch(PlayerAction.setCurrentVideoId())
         }
     }
 }

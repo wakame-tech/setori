@@ -55,6 +55,8 @@ struct LibraryView: View {
         Track(title: "Official髭男dism - Pretender［Official Video］", videoId: "TQ8WlA2GXbk"),
     ]
     
+    @State var history: [Track] = []
+    
     var body: some View {
         NavigationView {
             List {
@@ -65,7 +67,23 @@ struct LibraryView: View {
                              self.target = favorite
                              self.actionShowing = true
                         }
-                    }.onDelete(perform: deleteRow)
+                    }
+                    .onDelete { at in
+                        self.favorites.remove(atOffsets: at)
+                    }
+                }
+                
+                Section(header: Text("History")) {
+                    ForEach(history) { hist in
+                        TrackView(track: hist)
+                            .onTapGesture {
+                                self.target = hist
+                                self.actionShowing = true
+                        }
+                    }
+                    .onDelete { at in
+                        self.history.remove(atOffsets: at)
+                    }
                 }
             }
         }
@@ -76,13 +94,19 @@ struct LibraryView: View {
                         return
                     }
                     
+                    // send to palylist
                     self.store.dispatch(RoomAction.reserveTrack(track: track))
-                }
+                    
+                    // play if empty
+                    if self.store.state.roomState.room?.tracks.isEmpty ?? false {
+                        self.store.dispatch(PlayerAction.setCurrentVideoId())
+                    }
+                    
+                    // add to history
+                    self.history.append(track)
+                },
+                .cancel(Text("キャンセル"))
             ])
         }
-    }
-    
-    private func deleteRow(at indexSet: IndexSet) {
-        self.favorites.remove(atOffsets: indexSet)
     }
 }
