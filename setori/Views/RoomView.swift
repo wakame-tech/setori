@@ -34,13 +34,25 @@ struct RoomView: View {
                     
                     Spacer()
                 }
-            
-                ForEach(self.state.room?.tracks ?? []) { track in
-                    TrackView(track: track)
-                        .padding(.bottom, 10.0)
-                }
                 
-                Spacer()
+                if (self.state.room?.tracks ?? []).isEmpty {
+                    VStack {
+                        Spacer()
+                        
+                        Text("予約リストに曲を登録しましょう")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        
+                        Spacer()
+                    }
+                } else {
+                    ForEach(self.state.room?.tracks ?? []) { track in
+                        TrackView(track: track)
+                            .padding(.bottom, 10.0)
+                    }
+                    
+                    Spacer()
+                }
             }
             .padding()
         }
@@ -58,19 +70,36 @@ struct RoomView: View {
                 TextField("Enter Room ID", text: self.$roomID)
                     .padding()
                 
-                Button(action: {
-                    if !self.roomID.isEmpty {
-                        self.store.dispatch(RoomAction.subscribe(roomID: self.roomID))
-                        self.showSheet = false
+                HStack {
+                    Button(action: {
+                        if !self.roomID.isEmpty {
+                            self.store.dispatch(RoomAction.createRoom(roomID: self.roomID))
+                            self.store.dispatch(RoomAction.subscribe(roomID: self.roomID))
+                            self.showSheet = false
+                        }
+                    }) {
+                        Text("部屋を作る")
                     }
-                }) {
-                    Text("部屋に入る")
+                    .padding()
+                    .disabled(self.roomID.isEmpty)
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    
+                    Button(action: {
+                        if !self.roomID.isEmpty {
+                            self.store.dispatch(RoomAction.subscribe(roomID: self.roomID))
+                            self.showSheet = false
+                        }
+                    }) {
+                        Text("部屋に入る")
+                    }
+                    .padding()
+                    .disabled(self.roomID.isEmpty)
+                    .foregroundColor(.white)
+                    .background(Color.green)
+                    .cornerRadius(10)
                 }
-                .padding()
-                .disabled(self.roomID.isEmpty)
-                .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .top, endPoint: .bottom))
-                .cornerRadius(10)
                 
                 Spacer()
             }
