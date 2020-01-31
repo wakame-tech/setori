@@ -17,11 +17,15 @@ struct Track: SnapshotData, HasTimestamps, Equatable, Identifiable {
     var id: UUID = UUID()
     var title: String
     var videoId: String
+    var userName: String
+    var playMode: String
     
     static var fieldNames: [PartialKeyPath<Track> : String] {
         [
             \Self.self.title: "title",
             \Self.self.videoId: "videoId",
+            \Self.self.userName: "userName",
+            \Self.self.playMode: "playMode",
         ]
     }
 }
@@ -57,9 +61,8 @@ enum RoomAction: Action {
         }
     }
     
-    static func createRoom() -> Thunk<AppState> {
+    static func createRoom(roomID: String) -> Thunk<AppState> {
         Thunk<AppState> { dispatch, getState in
-            let roomID = "12345"
             print("create room \(roomID)")
             let newRoom = Room(roomID: roomID, tracks: [])
             Snapshot<Room>.init(data: newRoom, path: .room(roomID: roomID)).create { result in

@@ -13,6 +13,8 @@ import YoutubeKit
 // room view
 struct RoomView: View {
     @EnvironmentObject private var store: AppStore
+    @State private var showSheet: Bool = true
+    @State private var roomID: String = ""
     
     private var state: RoomState {
         get {
@@ -21,29 +23,57 @@ struct RoomView: View {
     }
     
     var body: some View {
-        VStack {
-            Section {
-                Text("roomID: \(state.room?.data.roomID ?? "---") ")
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("Room: \(self.state.room?.data.roomID ?? "---") 予約リスト")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .bold()
+                        .padding(.bottom, 20.0)
+                    
+                    Spacer()
+                }
+            
+                ForEach(self.state.room?.tracks ?? []) { track in
+                    TrackView(track: track)
+                        .padding(.bottom, 10.0)
+                }
                 
-                ForEach(state.room?.tracks ?? []) { track in
-                    Text("\(track.title)")
-                }
-
-                Button(action: {
-                    self.store.dispatch(PlayerAction.toggle())
-                }) {
-                    Text("Stop Video")
-                }
-                
-                Button(action: {
-                    self.store.dispatch(PlayerAction.setNextVideoId())
-                }) {
-                    Text("Next")
-                }
+                Spacer()
             }
+            .padding()
         }
-        .onAppear {
-            self.store.dispatch(RoomAction.subscribe(roomID: "12345"))
+        .sheet(isPresented: self.$showSheet) {
+            VStack {
+                Text("部屋の作成")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.vertical, 20.0)
+                
+                Text("プレイリストを共有するための部屋を作成します")
+                    .padding()
+                    .font(.caption)
+                
+                TextField("Enter Room ID", text: self.$roomID)
+                    .padding()
+                
+                Button(action: {
+                    if !self.roomID.isEmpty {
+                        self.store.dispatch(RoomAction.subscribe(roomID: self.roomID))
+                        self.showSheet = false
+                    }
+                }) {
+                    Text("部屋に入る")
+                }
+                .padding()
+                .disabled(self.roomID.isEmpty)
+                .foregroundColor(.white)
+                .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .top, endPoint: .bottom))
+                .cornerRadius(10)
+                
+                Spacer()
+            }
         }
     }
 }
