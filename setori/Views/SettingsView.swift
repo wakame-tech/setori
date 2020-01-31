@@ -43,7 +43,7 @@ struct SettingsView: View {
                 Divider()
                 
                 Button(action: {
-                    print("logout")
+                    self.store.dispatch(AuthAction.signOut())
                 }) {
                     Text("ログアウト")
                         .foregroundColor(.red)

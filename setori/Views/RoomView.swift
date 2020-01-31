@@ -27,7 +27,6 @@ struct RoomView: View {
             VStack {
                 HStack {
                     Text("Room: \(self.state.room?.data.roomID ?? "---") 予約リスト")
-                        .foregroundColor(.white)
                         .font(.title)
                         .bold()
                         .padding(.bottom, 20.0)
