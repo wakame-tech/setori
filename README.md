@@ -6,18 +6,18 @@ Firebase(BaaS)を使用してYoutube動画で曲をシェアして聴けるサ�
 ## スクリーンショット & 紹介
 まず、部屋を作成または既存の部屋に参加します。
 
-![](ScreenShots/fig1.png)
+<img src="ScreenShots/fig1.png" width="250px" />
 
 予約する曲を選んで予約します。曲の一部分だけ流すことも可能です。
 
-![](ScreenShots/fig2.png)
+<img src="ScreenShots/fig2.png" width="250px" />
 
 予約されている曲がカラオケのように順番に流れます。
 
-![](ScreenShots/fig3.png)
+<img src="ScreenShots/fig3.png" width="250px" />
 
 データベースにも登録されています。
-![](ScreenShots/fig4.png)
+<img src="ScreenShots/fig4.png" width="250px" />
 
 アプリはReduxアーキテクチャに則って作りました。
 ![](ScreenShots/fig5.png)
